@@ -1,0 +1,91 @@
+<html>
+  <head>
+  	<meta charset="UTF-8">
+    <title>Block Chain</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles.css') }}">
+  </head>
+  <body>
+    <h1>Block Chain</h1>
+    <span>Sender: </span><input name="sender" id="senderinput" type="text">
+    <br></br>    
+    <span>Recipient: </span><input name="recipient" id="recipientinput" type="text">
+    <br></br>
+    <span>Amount: </span><input name="amount" id="amountinput" type="text">
+    <br></br>    
+    <span>New Node: </span><input name="thirdmod" id="newnodeinput" type="text">
+
+    <div style="background-color:lightcoral">
+    <h3>Registration:</h3>
+    <span>
+      {{ respRegister }}
+    </span>
+    </div> 
+
+    <div style="background-color:lightseagreen">
+    <h3>Transaction:</h3>
+    <span>
+      {{ respTrans }}
+    </span>
+    </div> 
+    <div style="background-color:lightblue">
+    <h3>Mining:</h3>
+    <span>
+    {% for transactions in resp%}
+      {{ transactions }}
+    {% endfor %}
+    </span>
+    </div> 
+    <div style="background-color:lightgreen">
+    <h3>Chain:</h3>
+    <span>
+      {{ resp2 }}
+    </span>
+    </div> 
+    <div style="background-color:burlywood">
+    <h3>Resolve:</h3>
+    <span>
+      {{ resp3 }}
+    </span>
+    </div> 
+    <div style="background-color:lightsteelblue">
+    <h3>Other Node Info:</h3>
+    <span>
+      {{ respQuery }}
+    </span>
+    </div> 
+
+    <br></br>
+    <button id="bt0" onclick="location.href='/'">HOME</button>
+    <button id="bt" onclick="location.href='/mine'">MINE</button>
+    <button id="bt2" onclick="var nodename =  $('#newnodeinput').val(); console.log(nodename);
+    $.ajax({
+                                  url:'/nodes/register',
+                                  method:'POST',
+                                  dataType: 'json',
+                                  contentType: 'application/json',
+                                  data: JSON.stringify({'nodes':nodename}),
+                                  success:function(data){console.log(data+' post worked');}
+});     location.href='/nodes/register'; 
+console.log('Second part fired');">REGISTER</button>
+    <button id="bt3" onclick="var sender =  $('#senderinput').val(); var recip =  $('#recipientinput').val();
+    var amt =  $('#recipientinput').val();
+    $.ajax({
+                                  url:'http://0.0.0.0:5000/transactions/new',
+                                  method:'POST',
+                                  dataType: 'json',
+                                  contentType: 'application/json',
+                                  data: JSON.stringify({'sender':sender,'recipient':recip,'amount':amt}),
+                                  success:function(data){console.log(data);}
+});">TRANSACT</button>
+    <button id="bt4" onclick="location.href='/nodes/resolve'">RESOLVE</button>
+    <button id="bt5" onclick="location.href='/chain'">CHAIN</button>
+    <button id="bt6" onclick="location.href='/queryother'">QUERY OTHER NODE</button>
+    
+
+  </body>
+<script type = "text/javascript" 
+         src = "{{ url_for('static', filename = 'helpers.js') }}" ></script>
+
+<script type = "text/javascript" 
+         src = "{{ url_for('static', filename = 'jquery.js') }}" ></script>         
+</html>
