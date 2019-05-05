@@ -1,2 +1,2 @@
 # rpibc
-Flask implementation to be run locally on raspberry pi
+Flask implementation of block chain to be run locally on raspberry pi
