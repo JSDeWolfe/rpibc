@@ -7,6 +7,8 @@ from uuid import uuid4
 from flask import Flask, jsonify, request, render_template
 from urllib.parse import urlparse
 import os
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
 #https://www.therealtomrose.com/how-to-debug-python-or-django-in-heroku/
 
 class Blockchain(object):
@@ -97,13 +99,6 @@ class Blockchain(object):
 
 
     def new_transaction(self, sender, recipient, amount):
-        """
-        Creates a new transaction to go into the next mined Block
-        :param sender: <str> Address of the Sender
-        :param recipient: <str> Address of the Recipient
-        :param amount: <int> Amount
-        :return: <int> The index of the Block that will hold this transaction
-        """
 
         self.current_transactions.append({
             'sender': sender,
